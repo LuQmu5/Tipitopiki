@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.0.7</title>
+    <title>Unity Web Player | Tipitopiki v.0.8</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     
@@ -28,7 +28,13 @@
       </div>
     </div>
     <script>
-      var myGameInstance = null; // for unity instance
+      // global variables for unity interactions
+      var myGameInstance = null;
+      const VK_PUBLIC_ID = 1;
+      const STORY_IMAGE_URL = "url";
+      const UNITY_CONNECTOR_NAME = "UnityConnector"
+      // global variables for unity interactions
+      
       var canvas = document.querySelector("#unity-canvas");
 
       // Shows a temporary message banner/ribbon for a few seconds, or
@@ -130,7 +136,28 @@
       document.body.appendChild(script);
 
     </script>
-
-    <script src="JSConnector.js"></script>
+    
+    <script> // USER SCRIPT
+      function checkSubscribe()
+      {
+        alert("check sub");
+      }
+      
+      function firstPromoUse()
+      {
+        alert("first promo use");
+      }
+      
+      function secondPromoUse()
+      {
+        alert("second promo use);
+      }
+      
+      jQuery(document).ready(function($)
+      {
+        alert("init");
+        vkBridge.send('VKWebAppInit');
+      }); 
+    </script>
   </body>
 </html>

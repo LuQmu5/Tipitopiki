@@ -20,8 +20,6 @@ function secondPromoUse()
 
 jQuery(document).ready(function($)
 {
+  alert("init");
   vkBridge.send('VKWebAppInit');
-
-  subToAppShareEvent();
-  subToPostStoryEvent();
 }); 

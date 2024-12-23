@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.0.1</title>
+    <title>Unity Web Player | Tipitopiki v.1.0.2</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -30,6 +30,8 @@
       // promo constants
       const VK_PUBLIC_ID = 1;
       const STORY_IMAGE_URL = "url";
+      var FIRST_PROMO = "frstprm123";
+      var SECOND_PROMO = "scndprm456";
 
       // unity method names
       const unity_UpdateStateToNotSubscribed = "UpdateStateToNotSubscribed";
@@ -152,13 +154,8 @@
 
       function secondPromoUse()
       {
-        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, 'scndprm');
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, SECOND_PROMO);
         myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
-      }
-
-      function checkSubscribe()
-      {
-        alert("check sub");
       }
 
       // VK API functions
@@ -169,7 +166,7 @@
           {
               if (event.detail.data.result) 
               {
-                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, 'frstprm');
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, FIRST_PROMO);
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
               } 
           }

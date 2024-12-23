@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki</title>
+    <title>Unity Web Player | Tipitopiki v.1.0.0</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -24,6 +27,20 @@
       </div>
     </div>
     <script>
+      // promo constants
+      const VK_PUBLIC_ID = 1;
+      const STORY_IMAGE_URL = "url";
+
+      // unity method names
+      const unity_UpdateStateToNotSubscribed = "UpdateStateToNotSubscribed";
+      const unity_UpdateStateToRewardClaimed = "UpdateStateToRewardClaimed";
+      const unity_LoadUserState = "LoadUserState";
+      const unity_SetActivePromoCode = "SetActivePromoCode";
+      
+      // unity interactions
+      const UNITY_CONNECTOR_NAME = "UnityConnector";
+      var myGameInstance = null;
+      
       var canvas = document.querySelector("#unity-canvas");
 
       // Shows a temporary message banner/ribbon for a few seconds, or

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.5</title>
+    <title>Unity Web Player | Tipitopiki v.2.6</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -148,7 +148,8 @@
       // calls from unity scripts   
       function firstPromoUse()
       {
-        alert(myGameInstance != null);
+        alert("first promo");
+        postStory();
       }
 
       function secondPromoUse()
@@ -169,16 +170,39 @@
           {
               if (event.detail.data.result) 
               {
+                alert("story posted");
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
               } 
           }
         });
+      }
+
+      function postStory()
+      {
+          vkBridge.send('VKWebAppShowStoryBox', {
+          background_type: 'image',
+          url : 'https://sun9-65.userapi.com/c850136/v850136098/1b77eb/0YK6suXkY24.jpg',
+          attachment: {
+            text: 'book',
+            type: 'photo',
+            owner_id: 743784474,
+            id: 12345678
+          }})
+          .then((data) => {
+            if (data.code_data) {
+              console.log(data);
+            }})
+          .catch((error) => {
+            console.log(error);
+          });
       }
       
       // App Init
       jQuery(document).ready(function($)
       {
         vkBridge.send('VKWebAppInit');
+
+        subToPostStoryEvent();
       }); 
     </script>
     

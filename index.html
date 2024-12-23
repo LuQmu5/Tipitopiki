@@ -28,6 +28,11 @@
       </div>
     </div>
     <script>
+      const VK_PUBLIC_ID = 1;
+      const STORY_IMAGE_URL = "url";
+      const UNITY_CONNECTOR_NAME = "UnityConnector"
+      var myGameInstance = null;
+      
       var canvas = document.querySelector("#unity-canvas");
 
       // Shows a temporary message banner/ribbon for a few seconds, or
@@ -114,6 +119,7 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                myGameInstance = unityInstance;
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
@@ -131,7 +137,7 @@
     <script> // USER SCRIPT
       function firstPromoUse()
       {
-        alert("first promo");
+        alert(myGameInstance != null);
       }
 
       function secondPromoUse()

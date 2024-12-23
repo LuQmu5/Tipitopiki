@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.0.0</title>
+    <title>Unity Web Player | Tipitopiki v.1.0.1</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -141,5 +141,87 @@
       document.body.appendChild(script);
 
     </script>
+
+    <script> // USER SCRIPT
+      
+      // calls from unity scripts   
+      function firstPromoUse()
+      {
+        postStory();
+      }
+
+      function secondPromoUse()
+      {
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, 'scndprm');
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
+      }
+
+      function checkSubscribe()
+      {
+        alert("check sub");
+      }
+
+      // VK API functions
+      function subToPostStoryEvent()
+      {
+        vkBridge.subscribe(event => {          
+          if (event.detail.type == 'VKWebAppShowStoryBoxResult')
+          {
+              if (event.detail.data.result) 
+              {
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, 'frstprm');
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
+              } 
+          }
+        });
+      }
+
+      function postStory()
+      {
+          vkBridge.send('VKWebAppShowStoryBox', {
+          background_type: 'image',
+          url : 'https://sun9-65.userapi.com/c850136/v850136098/1b77eb/0YK6suXkY24.jpg',
+          attachment: {
+            text: 'book',
+            type: 'photo',
+            owner_id: 743784474,
+            id: 12345678
+          }})
+          .then((data) => {
+            if (data.code_data) {
+              console.log(data);
+            }})
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      function checkSubscribe()
+      {
+        vkBridge.send('VKWebAppJoinGroup', {
+        group_id: 1
+        })
+        .then((data) => { 
+          if (data.result) {
+            myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_LoadUserState);
+            return;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToNotSubscribed);
+      }
+      
+      // App Init
+      jQuery(document).ready(function($)
+      {
+        vkBridge.send('VKWebAppInit');
+
+        subToPostStoryEvent();
+      }); 
+    </script>
+    
   </body>
 </html>

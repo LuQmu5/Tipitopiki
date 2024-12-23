@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.6</title>
+    <title>Unity Web Player | Tipitopiki v.2.77</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -148,13 +148,13 @@
       // calls from unity scripts   
       function firstPromoUse()
       {
-        alert("first promo");
         postStory();
       }
 
       function secondPromoUse()
       {
-        alert("second promo");
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, 'scndprm');
       }
 
       function checkSubscribe()
@@ -170,8 +170,8 @@
           {
               if (event.detail.data.result) 
               {
-                alert("story posted");
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, 'frstprm');
               } 
           }
         });

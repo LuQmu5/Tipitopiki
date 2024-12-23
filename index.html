@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.0.2</title>
+    <title>Unity Web Player | Tipitopiki v.1.0.3</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -29,7 +29,7 @@
     <script>
       // promo constants
       const VK_PUBLIC_ID = 1;
-      const STORY_IMAGE_URL = "url";
+      const STORY_IMAGE_URL = "https://images.wallpaperscraft.com/image/single/cat_face_eyes_29447_1280x720.jpg";
       var FIRST_PROMO = "frstprm123";
       var SECOND_PROMO = "scndprm456";
 
@@ -177,7 +177,7 @@
       {
           vkBridge.send('VKWebAppShowStoryBox', {
           background_type: 'image',
-          url : 'https://sun9-65.userapi.com/c850136/v850136098/1b77eb/0YK6suXkY24.jpg',
+          url : STORY_IMAGE_URL,
           attachment: {
             text: 'book',
             type: 'photo',
@@ -196,7 +196,7 @@
       function checkSubscribe()
       {
         vkBridge.send('VKWebAppJoinGroup', {
-        group_id: 1
+        group_id: VK_PUBLIC_ID
         })
         .then((data) => { 
           if (data.result) {

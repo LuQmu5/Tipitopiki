@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.0.4</title>
+    <title>Unity Web Player | Tipitopiki v.0.5</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -160,11 +160,21 @@
 
       function getPromo(str)
       {
+        
         alert(str);
-        document.addEventListener('copy', evt => {
-          evt.preventDefault();
-          evt.clipboardData.setData('text/plain', str);
-        });
+        const copyContent = async () => 
+        {
+          try 
+          {
+            await navigator.clipboard.writeText(str);
+            console.log('Content copied to clipboard');
+          } 
+          catch (err) 
+          {
+            console.error('Failed to copy: ', err);
+          }
+        }
+        
       }
 
       // VK API functions

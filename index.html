@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.0.6</title>
+    <title>Unity Web Player | Tipitopiki v.0.7</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -145,38 +145,6 @@
     </script>
 
     <script> // USER SCRIPT
-      
-      // calls from unity scripts   
-      function firstPromoUse()
-      {
-        postStory();
-      }
-
-      function secondPromoUse()
-      {
-        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, SECOND_PROMO);
-        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
-      }
-
-      function getPromo(str)
-      {   
-        alert(str);
-        await copyContent();       
-      }
-
-      async function copyContent() 
-      {
-        try 
-        {
-          await navigator.clipboard.writeText('This is the text to be copied');
-          alert("copied");
-        } 
-        catch (err) 
-        {
-            alert("error copy");
-        }
-      }
-
       // VK API functions
       function subToPostStoryEvent()
       {
@@ -228,6 +196,23 @@
         });
 
         myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToNotSubscribed);
+      }
+      
+      // calls from unity scripts   
+      function firstPromoUse()
+      {
+        postStory();
+      }
+
+      function secondPromoUse()
+      {
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, SECOND_PROMO);
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
+      }
+
+      function getPromo(str)
+      {   
+        alert(str);  
       }
       
       // App Init

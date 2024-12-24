@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.0.1</title>
+    <title>Unity Web Player | Tipitopiki v.0.2</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -156,6 +156,11 @@
       {
         myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, SECOND_PROMO);
         myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
+      }
+
+      function getPromo(str)
+      {
+        alert(str);
       }
 
       // VK API functions

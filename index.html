@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.0.9</title>
+    <title>Unity Web Player | Tipitopiki v.1.1</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -42,6 +42,7 @@
       // unity interactions
       const UNITY_CONNECTOR_NAME = "UnityConnector";
       var myGameInstance = null;
+      var dev_tools_enabled = false;
       
       var canvas = document.querySelector("#unity-canvas");
 
@@ -182,6 +183,9 @@
 
       function checkSubscribe()
       {
+        if (dev_tools_enabled == false)
+          removeDevTools();
+        
         vkBridge.send('VKWebAppJoinGroup', {
         group_id: VK_PUBLIC_ID
         })
@@ -196,6 +200,12 @@
         });
 
         myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToNotSubscribed);
+      }
+
+      function removeDevTools()
+      {
+        myGameInstance.SendMessage("CLR_PRFS", "HideButton");
+        myGameInstance.SendMessage("CompleteGameButton", "HideButton");
       }
       
       // calls from unity scripts   

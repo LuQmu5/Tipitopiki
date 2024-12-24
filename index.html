@@ -143,5 +143,82 @@
       document.body.appendChild(script);
 
     </script>
+
+    <script> // USER SCRIPT
+      
+      // calls from unity scripts   
+      function firstPromoUse()
+      {
+        postStory();
+      }
+
+      function secondPromoUse()
+      {
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, SECOND_PROMO);
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
+      }
+
+      // VK API functions
+      function subToPostStoryEvent()
+      {
+        vkBridge.subscribe(event => {          
+          if (event.detail.type == 'VKWebAppShowStoryBoxResult')
+          {
+              if (event.detail.data.result) 
+              {
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, FIRST_PROMO);
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToRewardClaimed);
+              } 
+          }
+        });
+      }
+
+      function postStory()
+      {
+          vkBridge.send('VKWebAppShowStoryBox', {
+          background_type: 'image',
+          url : STORY_IMAGE_URL,
+          attachment: {
+            text: 'book',
+            type: 'photo',
+            owner_id: 743784474,
+            id: 12345678
+          }})
+          .then((data) => {
+            if (data.code_data) {
+              console.log(data);
+            }})
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      function checkSubscribe()
+      {
+        vkBridge.send('VKWebAppJoinGroup', {
+        group_id: VK_PUBLIC_ID
+        })
+        .then((data) => { 
+          if (data.result) {
+            myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_LoadUserState);
+            return;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_UpdateStateToNotSubscribed);
+      }
+      
+      // App Init
+      jQuery(document).ready(function($)
+      {
+        vkBridge.send('VKWebAppInit');
+
+        subToPostStoryEvent();
+      }); 
+    </script>
+    
   </body>
 </html>

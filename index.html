@@ -177,7 +177,7 @@
       function checkSubscribe()
       {
         var subbed = false;      
-        console.log("chuck sub");
+        console.log("check sub");
         
         vkBridge.send('VKWebAppJoinGroup', {
         group_id: VK_PUBLIC_ID
@@ -195,7 +195,8 @@
         
         if (subbed == false)
         {
-          myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
+          // myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
+          alert("not subbed");
         }
       }
 

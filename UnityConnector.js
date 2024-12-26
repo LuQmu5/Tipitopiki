@@ -1,3 +1,4 @@
+alert("connected with unity");
 
 function claimReward(id)
 {

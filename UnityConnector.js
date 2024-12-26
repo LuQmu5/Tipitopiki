@@ -37,11 +37,6 @@ function onGameSceneInited()
   checkSubscribe();
 }
 
-function onSDKInited()
-{
-  console.log("sdk inited");    
-}
-
 function onGameCompleted()
 {
   console.log("game completed");

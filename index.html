@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v5.4</title>
+    <title>Unity Web Player | Tipitopiki v5.5</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -145,11 +145,12 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                
                 myGameInstance = unityInstance;
                 var myScript = document.createElement("script");
                 myScript.src = "UnityConnector.js";
-                const initGame = require('./UnityConnector');
-                initGame();
+                import { onGameSceneInited } from 'UnityConnector.js';
+                onGameSceneInited();
           
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {

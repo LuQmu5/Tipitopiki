@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v3.2</title>
+    <title>Unity Web Player | Tipitopiki v3.2.1</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -39,6 +39,7 @@
       const UNITY_CONNECTOR_NAME = "UnityConnector";
       const DEVTOOL_ClearPrefsButton = "DEVTOOL_ClearPrefsButton";
       const DEVTOOL_CompleteGameButton = "DEVTOOL_CompleteGameButton";
+      
       var myGameInstance = null;
       var dev_tools_enabled = true;
 
@@ -133,6 +134,7 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                myGameInstance = unityInstance;
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);

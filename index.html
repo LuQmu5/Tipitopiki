@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v4.7</title>
+    <title>Unity Web Player | Tipitopiki v4.8</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -178,6 +178,7 @@
 
       function checkSubscribe()
       { 
+        var subbed = false;
         console.log("check sub");
         myGameInstance.SetFullscreen(0);
         
@@ -186,12 +187,18 @@
         })
         .then((data) => { 
           if (data.result) {
+            subbed = true;
             console.log(data);
           }
         })
         .catch((error) => {
           console.log(error);
         });
+
+        if (subbed == false)
+        {
+          myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
+        }
       }
 
       function onGameSceneInited()
@@ -249,11 +256,6 @@
               {
                 myGameInstance.SetFullscreen(1);
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState); // load
-              }
-              else
-              {
-                alert("no sub");
-                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
               }
           }
         });

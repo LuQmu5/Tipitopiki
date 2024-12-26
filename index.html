@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v3.2.1</title>
+    <title>Unity Web Player | Tipitopiki v3.3</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -148,5 +148,51 @@
       document.body.appendChild(script);
 
     </script>
+    
+    <script>
+      function claimReward(id)
+      {
+        alert(id);
+      }
+
+      function checkSubscribe()
+      {
+        alert("chuck sub");
+      }
+
+      function onGameSceneInited()
+      {
+        alert("game scene inited");    
+      }
+
+      function onSDKInited()
+      {
+        alert("sdk inited");    
+      }
+
+      function onGameCompleted()
+      {
+        alert("game completed");
+      }
+
+      function onGameStarted()
+      {
+        alert("game started");
+      }
+
+      function getPromoCode(str)
+      {
+        alert();
+      }
+      
+      // App Init
+      jQuery(document).ready(function($)
+      {
+        vkBridge.send('VKWebAppInit');
+
+        subToPostStoryEvent();
+      }); 
+    </script>
+    
   </body>
 </html>

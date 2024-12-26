@@ -146,6 +146,7 @@
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
                 myGameInstance = unityInstance;
+                onGameSceneInited();
                 var myScript = document.createElement("script");
                 myScript.src = "UnityConnector.js";
           

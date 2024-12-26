@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v4.0.3</title>
+    <title>Unity Web Player | Tipitopiki v4.0.4</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -223,11 +223,14 @@
 
       function subToPostStoryEvent()
       {
+        alert("sub to post story");
+        
         vkBridge.subscribe(event => {          
           if (event.detail.type == 'VKWebAppShowStoryBoxResult')
           {
               if (event.detail.data.result) 
               {
+                alert("sub to post story success");
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, FIRST_PROMO);
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_RewardClaimed);
               } 
@@ -249,6 +252,7 @@
           .then((data) => {
             if (data.code_data) {
               console.log(data);
+              alert("story posted");
             }})
           .catch((error) => {
             console.log(error);

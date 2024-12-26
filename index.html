@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v3.3</title>
+    <title>Unity Web Player | Tipitopiki v4.0</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -47,6 +47,17 @@
       const DEVTOOL_HideButton = "HideButton";
       const UnityConnector_LoadUserState = "LoadUserState";
       const UnityConnector_SetNewState = "SetNewState";
+      const UnityConnector_SetActivePromoCode = "SetActivePromoCode";
+
+      // UserStates
+      const USER_STATES_NotSubscribed = 0;
+      const USER_STATES_GameNotCompleted = 1;
+      const USER_STATES_GameCompleted = 2;
+      const USER_STATES_RewardClaimed = 3;
+
+      // PromoNames
+      const PROMO_NAMES_TwelvePercent = 0;
+      const PROMO_NAMES_SevenPercent = 1;
       
       var canvas = document.querySelector("#unity-canvas");
 
@@ -152,37 +163,96 @@
     <script>
       function claimReward(id)
       {
-        alert(id);
+        if (id == PROMO_NAMES_TwelvePercent)
+        {
+          postStory();
+        }
+        else if (id == PROMO_NAMES_SevenPercent)
+        {
+          myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetActivePromoCode, SECOND_PROMO);     
+          myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_RewardClaimed);
+        }
       }
 
       function checkSubscribe()
       {
-        alert("chuck sub");
+        console.log("chuck sub");
+        
+        vkBridge.send('VKWebAppJoinGroup', {
+        group_id: VK_PUBLIC_ID
+        })
+        .then((data) => { 
+          if (data.result) {
+            myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState);
+            return;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
       }
 
       function onGameSceneInited()
       {
-        alert("game scene inited");    
+        console.log("game scene inited");    
+        checkSubscribe();
       }
 
       function onSDKInited()
       {
-        alert("sdk inited");    
+        console.log("sdk inited");    
       }
 
       function onGameCompleted()
       {
-        alert("game completed");
+        console.log("game completed");
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_GameCompleted);
       }
 
       function onGameStarted()
       {
-        alert("game started");
+        console.log("game started");
       }
 
       function getPromoCode(str)
       {
-        alert();
+        alert(str);
+      }
+
+      function subToPostStoryEvent()
+      {
+        vkBridge.subscribe(event => {          
+          if (event.detail.type == 'VKWebAppShowStoryBoxResult')
+          {
+              if (event.detail.data.result) 
+              {
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, unity_SetActivePromoCode, FIRST_PROMO);
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_RewardClaimed);
+              } 
+          }
+        });
+      }
+
+      function postStory()
+      {
+          vkBridge.send('VKWebAppShowStoryBox', {
+          background_type: 'image',
+          url : STORY_IMAGE_URL,
+          attachment: {
+            text: 'book',
+            type: 'photo',
+            owner_id: 743784474,
+            id: 12345678
+          }})
+          .then((data) => {
+            if (data.code_data) {
+              console.log(data);
+            }})
+          .catch((error) => {
+            console.log(error);
+          });
       }
       
       // App Init

@@ -178,7 +178,6 @@
 
       function checkSubscribe()
       { 
-        var subbed = false;
         console.log("check sub");
         myGameInstance.SetFullscreen(0);
         
@@ -187,23 +186,18 @@
         })
         .then((data) => { 
           if (data.result) {
-            subbed = true;
             console.log(data);
           }
         })
         .catch((error) => {
           console.log(error);
         });
-
-        if (subbed == false)
-        {
-          myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
-        }
       }
 
       function onGameSceneInited()
       {
-        console.log("game scene inited");    
+        console.log("game scene inited");  
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
         checkForDevTools();
         checkSubscribe();
       }

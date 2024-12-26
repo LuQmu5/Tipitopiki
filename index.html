@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v4.1</title>
+    <title>Unity Web Player | Tipitopiki v4.2</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -234,11 +234,15 @@
               if (event.detail.data.result) 
               {
                 alert("subbed");
-                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_GameNotCompleted); // load
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState); // load
               }
-              else
+          }
+          else if (event.detail.type == "VKWebAppJoinGroupFailed")
+          {
+              if (event.detail.data.result) 
               {
                 alert("not subbed");
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed); // not sub
               }
           }
         });

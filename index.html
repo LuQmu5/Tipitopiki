@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v4.0.8</title>
+    <title>Unity Web Player | Tipitopiki v4.1</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -175,8 +175,7 @@
       }
 
       function checkSubscribe()
-      {
-        var subbed = false;      
+      {  
         console.log("check sub");
         
         vkBridge.send('VKWebAppJoinGroup', {
@@ -184,20 +183,12 @@
         })
         .then((data) => { 
           if (data.result) {
-            // myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState);
-            alert("load");
-            subbed = true;
+            console.log(data);
           }
         })
         .catch((error) => {
           console.log(error);
         });
-        
-        if (subbed == false)
-        {
-          // myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
-          alert("not subbed");
-        }
       }
 
       function onGameSceneInited()
@@ -227,7 +218,7 @@
         alert(str);
       }
 
-      function subToPostStoryEvent()
+      function subToVKEvents()
       {  
         vkBridge.subscribe(event => {          
           if (event.detail.type == 'VKWebAppShowStoryBoxResult')
@@ -237,6 +228,18 @@
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetActivePromoCode, FIRST_PROMO);
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_RewardClaimed);
               } 
+          }
+          else if (event.detail.type == "VKWebAppJoinGroupResult")
+          {
+              if (event.detail.data.result) 
+              {
+                alert("subbed");
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_GameNotCompleted); // load
+              }
+              else
+              {
+                alert("not subbed");
+              }
           }
         });
       }
@@ -266,7 +269,7 @@
       {
         vkBridge.send('VKWebAppInit');
 
-        subToPostStoryEvent();
+        subToVKEvents();
       }); 
     </script>
     

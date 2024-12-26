@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki Final Version 1.0</title>
+    <title>Unity Web Player | Tipitopiki Final Version 1.1</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -147,7 +147,6 @@
               }).then((unityInstance) => {
                 myGameInstance = unityInstance;
                 onGameSceneInited();
-                myGameInstance.SetFullscreen(1);
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
@@ -179,7 +178,6 @@
       function checkSubscribe()
       { 
         console.log("check sub");
-        myGameInstance.SetFullscreen(0);
         
         vkBridge.send('VKWebAppJoinGroup', {
         group_id: VK_PUBLIC_ID
@@ -239,7 +237,6 @@
           {
               if (event.detail.data.result) 
               {
-                myGameInstance.SetFullscreen(1);
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetActivePromoCode, FIRST_PROMO);
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_RewardClaimed);
               } 
@@ -248,7 +245,6 @@
           {
               if (event.detail.data.result) 
               {
-                myGameInstance.SetFullscreen(1);
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState); // load
               }
           }
@@ -257,7 +253,6 @@
 
       function postStory()
       {
-          myGameInstance.SetFullscreen(0);
           vkBridge.send('VKWebAppShowStoryBox', {
           background_type: 'image',
           url : STORY_IMAGE_URL,

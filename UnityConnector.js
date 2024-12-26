@@ -1,5 +1,3 @@
-alert("connected with unity");
-
 function claimReward(id)
 {
   if (id == PROMO_NAMES_TwelvePercent)
@@ -104,3 +102,5 @@ jQuery(document).ready(function($)
   subToVKEvents();
 }); 
 
+alert("connected with unity");
+module.exports = onGameSceneInited;

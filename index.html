@@ -194,7 +194,7 @@
       function onGameSceneInited()
       {
         console.log("game scene inited");    
-        alert(myGameInstance == null);
+        alert(myGameInstance == null); // VOT PROBLEMA!
         myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
         checkSubscribe();
       }

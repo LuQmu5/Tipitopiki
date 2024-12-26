@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v4.1.3</title>
+    <title>Unity Web Player | Tipitopiki v4.2</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -41,7 +41,7 @@
       const DEVTOOL_CompleteGameButton = "DEVTOOL_CompleteGameButton";
       
       var myGameInstance = null;
-      var dev_tools_enabled = true;
+      var dev_tools_enabled = false;
 
       // method names
       const DEVTOOL_HideButton = "HideButton";
@@ -196,7 +196,17 @@
       {
         console.log("game scene inited");    
         myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
+        checkForDevTools();
         checkSubscribe();
+      }
+
+      function checkForDevTools()
+      {
+        if (dev_tools_enabled == false)
+        {
+          myGameInstance.SendMessage(DEVTOOL_ClearPrefsButton, DEVTOOL_HideButton);
+          myGameInstance.SendMessage(DEVTOOL_CompleteGameButton, DEVTOOL_HideButton);
+        }
       }
 
       function onSDKInited()

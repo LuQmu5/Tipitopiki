@@ -28,7 +28,7 @@ function checkSubscribe()
   });
 }
 
-function onGameSceneInited()
+export function onGameSceneInited()
 {
   console.log("game scene inited");    
   alert(myGameInstance == null); // VOT PROBLEMA!
@@ -103,4 +103,3 @@ jQuery(document).ready(function($)
 }); 
 
 alert("connected with unity");
-module.exports = onGameSceneInited;

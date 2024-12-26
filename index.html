@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v4.0.6</title>
+    <title>Unity Web Player | Tipitopiki v4.0.7</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -176,6 +176,7 @@
 
       function checkSubscribe()
       {
+        var subbed = false;      
         console.log("chuck sub");
         
         vkBridge.send('VKWebAppJoinGroup', {
@@ -183,17 +184,18 @@
         })
         .then((data) => { 
           if (data.result) {
-            // myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState);
-            alert("subbed");
-            return;
+            myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState);
+            subbed = true;
           }
         })
         .catch((error) => {
           console.log(error);
         });
-
-        // myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
-        alert("not subbed");
+        
+        if (subbed == false)
+        {
+          myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
+        }
       }
 
       function onGameSceneInited()

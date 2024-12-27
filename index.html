@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v 4.1</title>
+    <title>Unity Web Player | Tipitopiki v 4.2</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -315,6 +315,8 @@
       
       function VKWebAppCallAPIMethod()
       {
+        alert("call api method users get");
+        
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'users.get',
         params: {
@@ -325,12 +327,12 @@
         .then((data) => { 
           if (data.response) {
             // Метод API выполнен
-            alert(data.response[0].id);
+            alert(data.response);
           }
         })
         .catch((error) => {
           // Ошибка
-          console.log(error);
+          alert(error);
         });
       }
       

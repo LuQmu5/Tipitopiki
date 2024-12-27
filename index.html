@@ -244,12 +244,8 @@
               {
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState);
               }
-                /*
-              else
-              {
-                myGameInstance.SendMessage(MainMenuManager, MainMenuManager_HideSubscribeCurtain);    
-              }
-              */
+            
+              myGameInstance.SendMessage(MainMenuManager, MainMenuManager_HideSubscribeCurtain);  
           }
         });
       }

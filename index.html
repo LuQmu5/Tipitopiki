@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.6f</title>
+    <title>Unity Web Player | Tipitopiki v.1.7f</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -223,7 +223,7 @@
           {
               if (event.detail.data.result) 
               {
-                myGameInstance.SendMessage(MainMenuManager, MainMenuManager_HideSubscribeCurtain);  
+                myGameInstance.SendMessage(MainMenu, MainMenuManager_HideSubscribeCurtain);  
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState);
               }
           }

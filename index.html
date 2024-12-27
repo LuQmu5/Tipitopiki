@@ -252,7 +252,7 @@
       
       function onGameSceneInited()
       {
-        askToAllowMessagesFromGroup();
+        // askToAllowMessagesFromGroup(); // работает, но нужно ее повторно вызывать на кнопке с промокодом, т.к если юзер не разрешил отправку, то ему и не придет ничего
         console.log("game scene inited");  
         myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
         checkForDevTools();

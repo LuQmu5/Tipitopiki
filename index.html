@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki Final Version 1.3</title>
+    <title>Unity Web Player | Tipitopiki Final Version 1.4</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -39,6 +39,7 @@
       const UNITY_CONNECTOR_NAME = "UnityConnector";
       const DEVTOOL_ClearPrefsButton = "DEVTOOL_ClearPrefsButton";
       const DEVTOOL_CompleteGameButton = "DEVTOOL_CompleteGameButton";
+      const MainMenuManager = "MainMenuManager";
       
       var myGameInstance = null;
       var dev_tools_enabled = true;
@@ -48,6 +49,7 @@
       const UnityConnector_LoadUserState = "LoadUserState";
       const UnityConnector_SetNewState = "SetNewState";
       const UnityConnector_SetActivePromoCode = "SetActivePromoCode";
+      const MainMenuManager_HideSubscribeCurtain = "HideSubscribeCurtain";
 
       // UserStates
       const USER_STATES_NotSubscribed = 0;
@@ -195,7 +197,6 @@
       function onGameSceneInited()
       {
         console.log("game scene inited");  
-        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
         checkForDevTools();
         checkSubscribe();
       }
@@ -245,8 +246,10 @@
           {
               if (event.detail.data.result) 
               {
-                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState); // load
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState);
               }
+              myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
+              myGameInstance.SendMessage(MainMenuManager, MainMenuManager_HideSubscribeCurtain);           
           }
         });
       }

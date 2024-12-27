@@ -227,14 +227,6 @@
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState);
               }
           }
-          else if (event.detail.type == "VKWebAppCallAPIMethodResult")
-          {
-            if (event.detail.data)
-            {
-              alert(event.detail.data);
-              console.log(event.detail.data);
-            }
-          }
         });
       }
 
@@ -320,27 +312,7 @@
       }
 
       var access_token = "vk1.a.8gtn_qrPsxO2qsjfQsv8ywRnVmKLvOUfgn79MBHUKbKZGTuTxG9U17Uu6e_KU3DFqloVP3C5EU2SZyjK4hfbw22ZEHavd9ZQo7kKos0FvijS1IOLTVcHsDcSxYD5wJfvTvJ8Qzat0DNd-lzmltnVWs77sIlHqF5gsIbtlDZcXNlU37ly_FY8ZgVbDDydWWeFykZW1odoEUrCQFvyNpxOHQ";
-      
-      function VKWebAppCallAPIMethod()
-      {        
-        vkBridge.send('VKWebAppCallAPIMethod', {
-        method: 'users.get',
-        params: {
-          user_ids: '0',
-          v: '5.131',
-          access_token: access_token
-        }})
-        .then((data) => { 
-          if (data.response) {
-            // Метод API выполнен
-          }
-        })
-        .catch((error) => {
-          // Ошибка
-          console.log(error);
-        });
-      }
-      
+            
       // App Init
       jQuery(document).ready(function($)
       {
@@ -349,8 +321,26 @@
         subToVKEvents();
         
         VKWebAppGetConfig();
-        VKWebAppCallAPIMethod();
+        test();
       }); 
+
+      function test()
+      {
+        alert("test");
+        var request = "https://" + server_address + "/method/users.get?access_token=" + access_token + "&v=5.199 HTTP/1.1";
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", request);
+        xhr.send();
+        xhr.responseType = "json";
+        xhr.onload = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.response);
+          } else {
+            console.log(`Error: ${xhr.status}`);
+          }
+        };
+      }
+      
     </script>
   </body>
 </html>

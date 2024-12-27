@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v 3.0</title>
+    <title>Unity Web Player | Tipitopiki v 4.2.0</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -168,8 +168,10 @@
 
     </script>
 
-    <!--user script-->
+    <!--user script-->    
     <script>
+      var activePromo = "";
+      
       function claimReward(id)
       {
         if (id == PROMO_NAMES_TwelvePercent)
@@ -180,6 +182,7 @@
         {
           myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetActivePromoCode, SECOND_PROMO);     
           myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_RewardClaimed);
+          activePromo = SECOND_PROMO;
         }
       }
       
@@ -208,6 +211,11 @@
         console.log("game started");
       }
 
+      function getPromo()
+      {
+        alert(activePromo);
+      }
+
       function subToVKEvents()
       {  
         vkBridge.subscribe(event => {          
@@ -217,6 +225,7 @@
               {
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetActivePromoCode, FIRST_PROMO);
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_RewardClaimed);
+                activePromo = FIRST_PROMO;
               } 
           }
           else if (event.detail.type == "VKWebAppJoinGroupResult")

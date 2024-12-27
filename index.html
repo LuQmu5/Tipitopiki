@@ -303,6 +303,7 @@
           if (data.api_host) {
             server_address = data.api_host;
             alert(server_address);
+            test();
           }
         })
         .catch((error) => {
@@ -321,7 +322,6 @@
         subToVKEvents();
         
         VKWebAppGetConfig();
-        test();
       }); 
 
       function test()

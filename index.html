@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v 4.0.2</title>
+    <title>Unity Web Player | Tipitopiki v 4.1</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -310,16 +310,39 @@
           console.log(error);
         });
       }
+
+      var access_token = "vk1.a.8gtn_qrPsxO2qsjfQsv8ywRnVmKLvOUfgn79MBHUKbKZGTuTxG9U17Uu6e_KU3DFqloVP3C5EU2SZyjK4hfbw22ZEHavd9ZQo7kKos0FvijS1IOLTVcHsDcSxYD5wJfvTvJ8Qzat0DNd-lzmltnVWs77sIlHqF5gsIbtlDZcXNlU37ly_FY8ZgVbDDydWWeFykZW1odoEUrCQFvyNpxOHQ";
+      
+      function VKWebAppCallAPIMethod()
+      {
+        vkBridge.send('VKWebAppCallAPIMethod', {
+        method: 'users.get',
+        params: {
+          user_ids: '',
+          v: '5.131',
+          access_token: access_token
+        }})
+        .then((data) => { 
+          if (data.response) {
+            // Метод API выполнен
+            alert(data.response[0].id);
+          }
+        })
+        .catch((error) => {
+          // Ошибка
+          console.log(error);
+        });
+      }
       
       // App Init
       jQuery(document).ready(function($)
       {
         vkBridge.send('VKWebAppInit');
-        VKWebAppGetConfig();
+        
         subToVKEvents();
-
-        var info = vkBridge.send("VKWebAppGetUserInfo");
-        alert(info.id);
+        
+        VKWebAppGetConfig();
+        VKWebAppCallAPIMethod();
       }); 
     </script>
   </body>

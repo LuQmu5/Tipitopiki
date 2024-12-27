@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.3f</title>
+    <title>Unity Web Player | Tipitopiki v.1.4f</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -223,15 +223,16 @@
           {
               if (event.detail.data.result) 
               {
-                alert("subbed");
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState);
               }
-              else
-              {
-                alert("not subbed");
-                myGameInstance.SendMessage(MainMenuManager, MainMenuManager_HideSubscribeCurtain);  
-              }
           }
+          /*
+          else if ()
+          {
+            alert("not subbed");
+            // myGameInstance.SendMessage(MainMenuManager, MainMenuManager_HideSubscribeCurtain);  
+          }
+          */
         });
       }
 

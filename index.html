@@ -170,8 +170,6 @@
 
     <!--user script-->    
     <script>
-      var activePromo = "";
-      
       function claimReward(id)
       {
         if (id == PROMO_NAMES_TwelvePercent)
@@ -182,7 +180,6 @@
         {
           myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetActivePromoCode, SECOND_PROMO);     
           myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_RewardClaimed);
-          activePromo = SECOND_PROMO;
         }
       }
       
@@ -211,9 +208,9 @@
         console.log("game started");
       }
 
-      function getPromo()
+      function getPromo(str)
       {
-        alert(activePromo);
+        alert(str);
       }
 
       function subToVKEvents()
@@ -225,7 +222,6 @@
               {
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetActivePromoCode, FIRST_PROMO);
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_RewardClaimed);
-                activePromo = FIRST_PROMO;
               } 
           }
           else if (event.detail.type == "VKWebAppJoinGroupResult")

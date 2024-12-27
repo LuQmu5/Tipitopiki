@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v 4.2</title>
+    <title>Unity Web Player | Tipitopiki v 4.3</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -227,6 +227,14 @@
                 myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState);
               }
           }
+          else if (event.detail.type == "VKWebAppCallAPIMethodResult")
+          {
+            if (event.detail.data)
+            {
+              alert(event.detail.data);
+              console.log(event.detail.data);
+            }
+          }
         });
       }
 
@@ -314,9 +322,7 @@
       var access_token = "vk1.a.8gtn_qrPsxO2qsjfQsv8ywRnVmKLvOUfgn79MBHUKbKZGTuTxG9U17Uu6e_KU3DFqloVP3C5EU2SZyjK4hfbw22ZEHavd9ZQo7kKos0FvijS1IOLTVcHsDcSxYD5wJfvTvJ8Qzat0DNd-lzmltnVWs77sIlHqF5gsIbtlDZcXNlU37ly_FY8ZgVbDDydWWeFykZW1odoEUrCQFvyNpxOHQ";
       
       function VKWebAppCallAPIMethod()
-      {
-        alert("call api method users get");
-        
+      {        
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'users.get',
         params: {
@@ -327,12 +333,11 @@
         .then((data) => { 
           if (data.response) {
             // Метод API выполнен
-            alert(data.response);
           }
         })
         .catch((error) => {
           // Ошибка
-          alert(error);
+          console.log(error);
         });
       }
       

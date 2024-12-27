@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki</title>
+    <title>Unity Web Player | Tipitopiki Final Version 1.8</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -24,6 +27,40 @@
       </div>
     </div>
     <script>
+      // promo codes
+      var FIRST_PROMO = "frstprm123";
+      var SECOND_PROMO = "scndprm456";
+
+      // vk api
+      const VK_PUBLIC_ID = 223821229;
+      const STORY_IMAGE_URL = "https://sun7-21.userapi.com/impg/UkXRUNcduKhdpUF8ciXY5imruHfq7xVwTJ7eWQ/8TQQOkNWJsc.jpg?size=1024x950&quality=95&sign=a50d9660b5e03eef519e2490291b7d8a&type=album";
+      
+      // unity interactions
+      const UNITY_CONNECTOR_NAME = "UnityConnector";
+      const DEVTOOL_ClearPrefsButton = "DEVTOOL_ClearPrefsButton";
+      const DEVTOOL_CompleteGameButton = "DEVTOOL_CompleteGameButton";
+      const MainMenuManager = "MainMenuManager";
+      
+      var myGameInstance = null;
+      var dev_tools_enabled = true;
+
+      // method names
+      const DEVTOOL_HideButton = "HideButton";
+      const UnityConnector_LoadUserState = "LoadUserState";
+      const UnityConnector_SetNewState = "SetNewState";
+      const UnityConnector_SetActivePromoCode = "SetActivePromoCode";
+      const MainMenuManager_HideSubscribeCurtain = "HideSubscribeCurtain";
+
+      // UserStates
+      const USER_STATES_NotSubscribed = 0;
+      const USER_STATES_GameNotCompleted = 1;
+      const USER_STATES_GameCompleted = 2;
+      const USER_STATES_RewardClaimed = 3;
+
+      // PromoNames
+      const PROMO_NAMES_TwelvePercent = 0;
+      const PROMO_NAMES_SevenPercent = 1;
+      
       var canvas = document.querySelector("#unity-canvas");
 
       // Shows a temporary message banner/ribbon for a few seconds, or
@@ -52,12 +89,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/TipitopikiBuildWeb.loader.js";
+      var loaderUrl = buildUrl + "/TipitopikiBuild.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/TipitopikiBuildWeb.data.unityweb",
-        frameworkUrl: buildUrl + "/TipitopikiBuildWeb.framework.js.unityweb",
-        codeUrl: buildUrl + "/TipitopikiBuildWeb.wasm.unityweb",
+        dataUrl: buildUrl + "/TipitopikiBuild.data.unityweb",
+        frameworkUrl: buildUrl + "/TipitopikiBuild.framework.js.unityweb",
+        codeUrl: buildUrl + "/TipitopikiBuild.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "VegmaGames",
         productName: "Tipitopiki",
@@ -110,6 +147,8 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                myGameInstance = unityInstance;
+                onGameSceneInited();
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
@@ -123,5 +162,122 @@
       document.body.appendChild(script);
 
     </script>
+    
+    <script>
+      function claimReward(id)
+      {
+        if (id == PROMO_NAMES_TwelvePercent)
+        {
+          postStory();
+        }
+        else if (id == PROMO_NAMES_SevenPercent)
+        {
+          myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetActivePromoCode, SECOND_PROMO);     
+          myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_RewardClaimed);
+        }
+      }
+
+      function checkSubscribe()
+      { 
+        console.log("check sub");
+        
+        vkBridge.send('VKWebAppJoinGroup', {
+        group_id: VK_PUBLIC_ID
+        })
+        .then((data) => { 
+          if (data.result) {
+            console.log(data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+
+      function onGameSceneInited()
+      {
+        console.log("game scene inited");  
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
+        checkForDevTools();
+        checkSubscribe();
+      }
+
+      function checkForDevTools()
+      {
+        if (dev_tools_enabled == false)
+        {
+          myGameInstance.SendMessage(DEVTOOL_ClearPrefsButton, DEVTOOL_HideButton);
+          myGameInstance.SendMessage(DEVTOOL_CompleteGameButton, DEVTOOL_HideButton);
+        }
+      }
+
+      function onSDKInited()
+      {
+        console.log("sdk inited");    
+      }
+
+      function onGameCompleted()
+      {
+        console.log("game completed");
+        myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_GameCompleted);
+      }
+
+      function onGameStarted()
+      {
+        console.log("game started");
+      }
+
+      function subToVKEvents()
+      {  
+        vkBridge.subscribe(event => {          
+          if (event.detail.type == 'VKWebAppShowStoryBoxResult')
+          {
+              if (event.detail.data.result) 
+              {
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetActivePromoCode, FIRST_PROMO);
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_RewardClaimed);
+              } 
+          }
+          else if (event.detail.type == "VKWebAppJoinGroupResult")
+          {
+              if (event.detail.data.result) 
+              {
+                myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_LoadUserState);
+              }
+            
+              myGameInstance.SendMessage(MainMenuManager, MainMenuManager_HideSubscribeCurtain);  
+          }
+        });
+      }
+
+      function postStory()
+      {
+          vkBridge.send('VKWebAppShowStoryBox', {
+          background_type: 'image',
+          url : STORY_IMAGE_URL,
+          attachment: {
+            text: 'book',
+            type: 'photo',
+            owner_id: 743784474,
+            id: 12345678
+          }})
+          .then((data) => {
+            if (data.code_data) {
+              console.log(data);
+            }})
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      
+      // App Init
+      jQuery(document).ready(function($)
+      {
+        vkBridge.send('VKWebAppInit');
+
+        subToVKEvents();
+      }); 
+    </script>
+    
   </body>
 </html>

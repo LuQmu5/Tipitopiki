@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1f</title>
+    <title>Unity Web Player | Tipitopiki v.1.1f</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -148,6 +148,12 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+          
+                // init unity on load
+                myGameInstance = unityInstance;
+                onGameSceneInited();
+                // init unity on load
+          
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
@@ -160,6 +166,14 @@
 
       document.body.appendChild(script);
 
+    </script>
+
+    <!--user script-->
+    <script>
+      function onGameSceneInited()
+      {
+        alert("init");
+      }
     </script>
   </body>
 </html>

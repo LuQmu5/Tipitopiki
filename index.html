@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.5f</title>
+    <title>Unity Web Player | Tipitopiki v.1.6f</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -39,7 +39,7 @@
       const UNITY_CONNECTOR_NAME = "UnityConnector";
       const DEVTOOL_ClearPrefsButton = "DEVTOOL_ClearPrefsButton";
       const DEVTOOL_CompleteGameButton = "DEVTOOL_CompleteGameButton";
-      const MainMenuManager = "MainMenuManager";
+      const MainMenu = "MainMenu";
       
       var myGameInstance = null;
       var dev_tools_enabled = true;
@@ -273,7 +273,7 @@
         .catch((error) => {
           console.log(error);
           alert("not subbed");
-          myGameInstance.SendMessage(MainMenuManager, MainMenuManager_HideSubscribeCurtain);  
+          myGameInstance.SendMessage(MainMenu, MainMenuManager_HideSubscribeCurtain);  
         });
       }
       

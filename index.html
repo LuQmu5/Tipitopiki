@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v 4.0.1</title>
+    <title>Unity Web Player | Tipitopiki v 4.0.2</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -293,12 +293,28 @@
           console.log(error);
         });
       }
+
+      var server_address = null;    
+      function VKWebAppGetConfig()
+      {
+        bridge.send('VKWebAppGetConfig')
+        .then((data) => { 
+          if (data.api_host) {
+            server_address = data.api_host;
+            alert(server_address);
+          }
+        })
+        .catch((error) => {
+          // Ошибка
+          console.log(error);
+        });
+      }
       
       // App Init
       jQuery(document).ready(function($)
       {
         vkBridge.send('VKWebAppInit');
-
+        VKWebAppGetConfig();
         subToVKEvents();
       }); 
     </script>

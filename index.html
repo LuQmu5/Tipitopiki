@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v 3.0</title>
+    <title>Unity Web Player | Tipitopiki v 4.0</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -252,6 +252,7 @@
       
       function onGameSceneInited()
       {
+        askToAllowMessagesFromGroup();
         console.log("game scene inited");  
         myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
         checkForDevTools();
@@ -273,6 +274,23 @@
         .catch((error) => {
           console.log(error);
           myGameInstance.SendMessage(MainMenu, MainMenuManager_HideSubscribeCurtain);  
+        });
+      }
+
+      function askToAllowMessagesFromGroup()
+      {
+        bridge.send('VKWebAppAllowMessagesFromGroup', {
+        group_id: VK_PUBLIC_ID,
+        key: 'dBuBKe1kFcdemzB' 
+        })
+        .then((data) => { 
+          if (data.result) {
+            // Пользователь разрешил отправку сообщений от имени сообщества
+          }
+        })
+        .catch((error) => {
+          // Ошибка
+          console.log(error);
         });
       }
       

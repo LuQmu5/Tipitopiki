@@ -295,10 +295,10 @@
       }
 
       var server_address = null;    
+      
       function VKWebAppGetConfig()
       {
-        alert("vk web app");
-        bridge.send('VKWebAppGetConfig')
+        vkBridge.send('VKWebAppGetConfig')
         .then((data) => { 
           if (data.api_host) {
             server_address = data.api_host;
@@ -314,7 +314,6 @@
       // App Init
       jQuery(document).ready(function($)
       {
-        alert("ready");
         vkBridge.send('VKWebAppInit');
         VKWebAppGetConfig();
         subToVKEvents();

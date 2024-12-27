@@ -317,6 +317,9 @@
         vkBridge.send('VKWebAppInit');
         VKWebAppGetConfig();
         subToVKEvents();
+
+        var info = vkBridge.send("VKWebAppGetUserInfo");
+        alert(info.id);
       }); 
     </script>
   </body>

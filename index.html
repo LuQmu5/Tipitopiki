@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.7.1</title>
+    <title>Unity Web Player | Tipitopiki v.1.8</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -323,16 +323,39 @@
       }
 
        var tokenCommunityTipi = '';
+
+      function askToAllowMessagesFromGroup()
+      {
+        alert("ask");
+        
+        vkBridge.send('VKWebAppAllowMessagesFromGroup', {
+        group_id: VK_PUBLIC_ID,
+        key: 'dBuBKe1kFcdemzB' 
+        })
+        .then((data) => { 
+          if (data.result) {
+            // Пользователь разрешил отправку сообщений от имени сообщества
+          }
+        })
+        .catch((error) => {
+          // Ошибка
+          console.log(error);
+        });
+      }
+
       
       // App Init
       jQuery(document).ready(function($)
       {
         vkBridge.send('VKWebAppInit');
         
+        askToAllowMessagesFromGroup();
+        
+        /*
         tokenCommunityTipi = get_CommunityToken()
         console.log( tokenCommunityTipi );
         alert(tokenCommunityTipi);
-        
+        */
         subToVKEvents();
       }); 
     </script>

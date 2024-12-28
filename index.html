@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.9</title>
+    <title>Unity Web Player | Tipitopiki v.1.9.1</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -346,6 +346,7 @@
 
       function CallApiMethod(){
         alert("call api");
+        alert("token: " + access_token);
         
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'users.get',

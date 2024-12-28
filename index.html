@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2</title>
+    <title>Unity Web Player | Tipitopiki v.2.1</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -365,15 +365,12 @@
         });
       }
 
-      function CallApiMethod(){
-        alert("call api");
-        alert("token: " + access_token);
-        
+      function getUserID(){
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'users.get',
         params: {
           v: '5.199',
-          access_token: access_token
+          access_token: TOKEN
         }})
         .then((data) => { 
           if (data.response) {
@@ -387,9 +384,7 @@
           console.log(error);
         });
       }
-
-      
-      
+            
       function getUserToken()
       {
         vkBridge.send('VKWebAppGetAuthToken', { 
@@ -398,11 +393,8 @@
         })
         .then( (data) => { 
           if (data.access_token) {
-
             alert("token: " + data.access_token);
-            console.log("token: " + data.access_token);
-
-            
+            console.log("token: " + data.access_token);           
           }
         })
         .catch( (error) => {
@@ -417,7 +409,8 @@
       {
         vkBridge.send('VKWebAppInit');
 
-        askToAllowMessagesFromGroup();
+        getUserID();
+        // askToAllowMessagesFromGroup();
         // CallApiMethod();
         // getUserToken();
                 

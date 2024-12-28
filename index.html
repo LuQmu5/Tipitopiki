@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.9.8</title>
+    <title>Unity Web Player | Tipitopiki v.1.9.9</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -321,24 +321,41 @@
         
         return tokenCommunity;
       }
-
-       var tokenCommunityTipi = '';
-      var access_token = "vk1.a.8gtn_qrPsxO2qsjfQsv8ywRnVmKLvOUfgn79MBHUKbKZGTuTxG9U17Uu6e_KU3DFqloVP3C5EU2SZyjK4hfbw22ZEHavd9ZQo7kKos0FvijS1IOLTVcHsDcSxYD5wJfvTvJ8Qzat0DNd-lzmltnVWs77sIlHqF5gsIbtlDZcXNlU37ly_FY8ZgVbDDydWWeFykZW1odoEUrCQFvyNpxOHQ";
+ 
+      var TOKEN = "vk1.a.8PYpJ7LKjW2OP7xL0qyCPW7SgwqfpOqa_8vVSdGSmIsJM3vnBqc-NRHuXZRYzB0BCIp1IkpN3qxtW0Bf6PmYpyzIjErIwA5YxYneV7uBpsKKVWsDAeQ0UBzkKlugds4GRe96DIosbhrPOq128ilG8aTwNLNzwV-aJZpNynTz4Cs_cZjIuHcR-SqVArx17FmdGJEiUjaTLTmHXZdSjaPKeA";
+      
+      function sendMessage(){
+        vkBridge.send('VKWebAppCallAPIMethod', {
+        method: 'messages.send',
+        params: {
+          user_id: 854043495,
+          message: "hi",
+          v: '5.199',
+          access_token: TOKEN
+        }})
+        .then((data) => { 
+          if (data.response) {
+            // Метод API выполнен
+            alert(data.response);
+            console.log(data.response);
+          }
+        })
+        .catch((error) => {
+          // Ошибка
+          console.log(error);
+        });
+      }
       
       function askToAllowMessagesFromGroup()
-      {
-
-        
+      {       
         vkBridge.send('VKWebAppAllowMessagesFromGroup', {
         group_id: 223821229,
         key: 'dBuBKe1kFcdemzB' 
         })
         .then((data) => { 
           if (data.result) {
-            
-            alert(data.result);
-            console.log(data.result);
-            
+            sendMessage();
+            console.log(data.result);          
           }
         })
         .catch((error) => {
@@ -370,6 +387,8 @@
         });
       }
 
+      
+      
       function getUserToken()
       {
         vkBridge.send('VKWebAppGetAuthToken', { 
@@ -397,9 +416,9 @@
       {
         vkBridge.send('VKWebAppInit');
 
-        // getUserToken();
-        // CallApiMethod();
         askToAllowMessagesFromGroup();
+        // CallApiMethod();
+        // getUserToken();
                 
         /*
         tokenCommunityTipi = get_CommunityToken()

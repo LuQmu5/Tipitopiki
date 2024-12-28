@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.1</title>
+    <title>Unity Web Player | Tipitopiki v.2.1.1</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -366,11 +366,13 @@
       }
 
       function getUserID(){
+        
+        
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'users.get',
         params: {
           v: '5.199',
-          access_token: TOKEN
+          access_token: '3df95f153df95f153df95f152d3edf2b1833df93df95f155a9976f4991fad82ffc2a936'
         }})
         .then((data) => { 
           if (data.response) {

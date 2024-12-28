@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.8</title>
+    <title>Unity Web Player | Tipitopiki v.1.9</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -323,7 +323,8 @@
       }
 
        var tokenCommunityTipi = '';
-
+      var access_token = "vk1.a.8gtn_qrPsxO2qsjfQsv8ywRnVmKLvOUfgn79MBHUKbKZGTuTxG9U17Uu6e_KU3DFqloVP3C5EU2SZyjK4hfbw22ZEHavd9ZQo7kKos0FvijS1IOLTVcHsDcSxYD5wJfvTvJ8Qzat0DNd-lzmltnVWs77sIlHqF5gsIbtlDZcXNlU37ly_FY8ZgVbDDydWWeFykZW1odoEUrCQFvyNpxOHQ";
+      
       function askToAllowMessagesFromGroup()
       {
         alert("ask");
@@ -343,13 +344,38 @@
         });
       }
 
+      function CallApiMethod(){
+        alert("call api");
+        
+        vkBridge.send('VKWebAppCallAPIMethod', {
+        method: 'users.get',
+        params: {
+          user_ids: '',
+          v: '5.199',
+          access_token: access_token
+        }})
+        .then((data) => { 
+          if (data.response) {
+            // Метод API выполнен
+            alert(data.response);
+            console.log(data.response);
+          }
+        })
+        .catch((error) => {
+          // Ошибка
+          console.log(error);
+        });
+      }
+
       
       // App Init
       jQuery(document).ready(function($)
       {
         vkBridge.send('VKWebAppInit');
         
-        askToAllowMessagesFromGroup();
+        // askToAllowMessagesFromGroup();
+        
+        CallApiMethod();
         
         /*
         tokenCommunityTipi = get_CommunityToken()

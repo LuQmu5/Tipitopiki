@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.2.8</title>
+    <title>Unity Web Player | Tipitopiki v.2.2.9</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -198,7 +198,7 @@
         return Math.floor(Math.random() * 100);
       }
       
-      function sendMessage(id, message)
+      function sendMessage(id, msg_text)
       { 
         console.log("Send message, id: " + id);
         
@@ -206,7 +206,7 @@
         method: 'messages.send',
         params: {
           user_id: id,
-          message: "hello!!!",
+          message: msg_text,
           v: '5.199',
           access_token: TOKEN,
           random_id: getRandomID()

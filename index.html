@@ -140,6 +140,7 @@
       
       // gloval variables
       var myGameInstance = null;
+      var promoIsSent = false;
       // gloval variables
       
       // App Init
@@ -215,6 +216,7 @@
           if (data.response) {
             console.log(data.response);
             myGameInstance.SendMessage("UnityConnector", "SetNewState", 4); // надо бы в юнити метод сделать читаемый
+            promoIsSent = true;
           }
         })
         .catch((error) => {
@@ -255,7 +257,10 @@
       
       function promocodeSend(str)
       {
-         askToAllowMessagesFromGroup(str);
+        if (promoIsSent == false)
+        {
+           askToAllowMessagesFromGroup(str);
+        }
       }
 
       function subToVKEvents()

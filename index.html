@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.9.4</title>
+    <title>Unity Web Player | Tipitopiki v.1.9.5</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -275,7 +275,6 @@
       
       function onGameSceneInited()
       {
-        CallApiMethod();
         console.log("game scene inited");  
         myGameInstance.SendMessage(UNITY_CONNECTOR_NAME, UnityConnector_SetNewState, USER_STATES_NotSubscribed);
         checkForDevTools();
@@ -368,12 +367,34 @@
         });
       }
 
+      function getUserToken()
+      {
+        vkBridge.send('VKWebAppGetAuthToken', { 
+        app_id: APP_ID, 
+        scope: 'status,messages'
+        })
+        .then( (data) => { 
+          if (data.access_token) {
+
+            alert(data.access_token);
+            console.log(data.access_token);
+
+            
+          }
+        })
+        .catch( (error) => {
+          // Ошибка
+          console.log(error);
+        });
+      }
       
       // App Init
       jQuery(document).ready(function($)
       {
         vkBridge.send('VKWebAppInit');
-        
+
+        getUserToken();
+        // CallApiMethod();
         // askToAllowMessagesFromGroup();
                 
         /*

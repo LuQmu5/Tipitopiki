@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.0.3</title>
+    <title>Unity Web Player | Tipitopiki v.1.0.4</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -132,14 +132,53 @@
 
     <!--my script-->
     <script>
+      // const
+      const VK_PUBLIC_ID = 223821229;
+      // const
+      
       // gloval variables
       var myGameInstance = null;
+      // gloval variables
       
+      // App Init
+      jQuery(document).ready(function($)
+      {
+        vkBridge.send('VKWebAppInit');
+        // subToVKEvents();
+      }); 
+      // App Init
+  
+      // my functions
       function InitApp(unityInstance)
       {
         myGameInstance = unityInstance;
         myGameInstance.SendMessage("UnityConnector", "InitSDK");
       }
+      // my functions
+
+      // vk api
+      function checkSubscribe()
+      { 
+        console.log("check sub");
+        
+        vkBridge.send('VKWebAppJoinGroup', {
+        group_id: VK_PUBLIC_ID
+        })
+        .then((data) => { 
+          if (data.result) {
+            console.log(data);
+            return true;
+          }
+        })
+        .catch((error) => {
+          console.log(error); 
+          return false;
+        });
+
+        return false;
+      }
+      // vk api
+      
     </script>
     <!--my script-->
     

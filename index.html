@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.3.0 (no story post)</title>
+    <title>Unity Web Player | Tipitopiki v.3.0.1a (no story post)</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -241,7 +241,7 @@
             myGameInstance.SendMessage("UnityConnector", "SetNewState", 4); // надо бы в юнити метод сделать читаемый
             promoIsSent = true;
 
-            sendPromocodeMessage(id, promocodeText, getRandomID() + 2);
+            sendPromocodeMessage(id, promocodeText, getRandomID() + 2); // set time out?
           }
         })
         .catch((error) => {
@@ -251,7 +251,7 @@
 
       function getUserID(promocodeText)
       {
-        var messageTextExtra = "Здравствуйте! Спасибо за Ваше участие. Вы стали обладателем промокода на скидку от магазина Типитопики. Промокод в отдельном сообщении. :-)"
+        var messageTextExtra = "Здравствуйте! Спасибо за Ваше участие. Вы стали обладателем промокода на скидку от магазина Типитопики. Промокод в следующем сообщении. :-)"
         
         vkBridge.send('VKWebAppGetUserInfo', {})
         .then((data) => { 

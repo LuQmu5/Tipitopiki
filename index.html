@@ -330,11 +330,11 @@
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'messages.send',
         params: {
-          user_id: 854043495,
-          message: "hi!!!",
+          user_id: id,
+          message: "hello!",
           v: '5.199',
           access_token: TOKEN,
-          random_id: 253
+          random_id: 313
         }})
         .then((data) => { 
           if (data.response) {
@@ -377,14 +377,15 @@
             console.log(data);
             console.log(data.id);
             userID = data.id;
-
-            return userID;
+          
           }    
         })
         .catch((error) => {
           // Ошибка
           console.log(error);
         });
+
+        return userID;
       }
             
       function getUserToken()

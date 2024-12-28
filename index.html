@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.0</title>
+    <title>Unity Web Player | Tipitopiki v.2.2.8</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -198,7 +198,7 @@
         return Math.floor(Math.random() * 100);
       }
       
-      function sendMessage(id)
+      function sendMessage(id, message)
       { 
         console.log("Send message, id: " + id);
         
@@ -213,9 +213,8 @@
         }})
         .then((data) => { 
           if (data.response) {
-            // выполнено
-            alert("msg snd");
             console.log(data.response);
+            myGameInstance.SendMessage("UnityConnector", "SetNewState", 4); // надо бы в юнити метод сделать читаемый
           }
         })
         .catch((error) => {
@@ -223,13 +222,13 @@
         });
       }
 
-      function getUserID()
+      function getUserID(message)
       {
         vkBridge.send('VKWebAppGetUserInfo', {})
         .then((data) => { 
           if (data.id) {
             console.log(data);
-            sendMessage(data.id);
+            sendMessage(data.id, message);
           }    
         })
         .catch((error) => {
@@ -237,7 +236,7 @@
         });
       }
       
-      function askToAllowMessagesFromGroup()
+      function askToAllowMessagesFromGroup(message)
       {       
         vkBridge.send('VKWebAppAllowMessagesFromGroup', {
         group_id: VK_PUBLIC_ID,
@@ -245,7 +244,7 @@
         })
         .then((data) => { 
           if (data.result) {
-            getUserID();
+            getUserID(message);
             console.log(data.result);          
           }
         })
@@ -256,7 +255,7 @@
       
       function promocodeSend(str)
       {
-         askToAllowMessagesFromGroup();
+         askToAllowMessagesFromGroup(str);
       }
 
       function subToVKEvents()

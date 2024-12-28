@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.0.2</title>
+    <title>Unity Web Player | Tipitopiki v.1.0.3</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -27,9 +27,6 @@
       </div>
     </div>
     <script>
-      // gloval variables
-      var myGameInstance = null;
-      
       var canvas = document.querySelector("#unity-canvas");
 
       // Shows a temporary message banner/ribbon for a few seconds, or
@@ -135,11 +132,16 @@
 
     <!--my script-->
     <script>
+      // gloval variables
+      var myGameInstance = null;
+      
       function InitApp(unityInstance)
-        {
-          myGameInstance = unityInstance;
-          alert(unityInstance != null);
-        }
+      {
+        myGameInstance = unityInstance;
+        myGameInstance.SendMessage("UnityConnector", "InitSDK");
+      }
     </script>
+    <!--my script-->
+    
   </body>
 </html>

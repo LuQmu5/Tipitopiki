@@ -298,12 +298,39 @@
           myGameInstance.SendMessage(MainMenu, MainMenuManager_HideSubscribeCurtain);  
         });
       }
+
+      function get_CommunityToken()  {           
+        var tokenCommunity = "";
+        
+        VKBridge.send("VKWebAppGetCommunityToken", {
+               app_id: PUBLIC_ID,  
+               group_id: 166562603, 
+               scope: 'messages,docs' 
+             })
+              .then( (data) => { 
+            if (typeof data == 'object' && data.access_token) {
+            tokenCommunity = data.access_token;
+            }
+          })
+          .catch((error) => {
+            // Ошибка
+            console.log(error);
+          });
+        
+        return tokenCommunity;
+      }
+
+       var tokenCommunityTipi = '';
       
       // App Init
       jQuery(document).ready(function($)
       {
         vkBridge.send('VKWebAppInit');
-
+        
+        tokenCommunityTipi = get_CommunityToken()
+        console.log( tokenCommunityTipi );
+        alert(tokenCommunityTipi);
+        
         subToVKEvents();
       }); 
     </script>

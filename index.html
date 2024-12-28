@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.0.1</title>
+    <title>Unity Web Player | Tipitopiki v.1.0.2</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -24,6 +27,9 @@
       </div>
     </div>
     <script>
+      // gloval variables
+      var myGameInstance = null;
+      
       var canvas = document.querySelector("#unity-canvas");
 
       // Shows a temporary message banner/ribbon for a few seconds, or
@@ -110,6 +116,9 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                // init
+                InitApp(unityInstance);
+                // init
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
@@ -122,6 +131,15 @@
 
       document.body.appendChild(script);
 
+    </script>
+
+    <!--my script-->
+    <script>
+      function InitApp(unityInstance)
+        {
+          myGameInstance = unityInstance;
+          alert(unityInstance != null);
+        }
     </script>
   </body>
 </html>

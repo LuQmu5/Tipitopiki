@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.2.9</title>
+    <title>Unity Web Player | Tipitopiki v.2.3</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -199,7 +199,7 @@
         return Math.floor(Math.random() * 100);
       }
       
-      function sendMessage(id, msg_text)
+      function sendMessage(id, messageText)
       { 
         console.log("Send message, id: " + id);
         
@@ -207,7 +207,7 @@
         method: 'messages.send',
         params: {
           user_id: id,
-          message: msg_text,
+          message: messageText,
           v: '5.199',
           access_token: TOKEN,
           random_id: getRandomID()
@@ -224,13 +224,16 @@
         });
       }
 
-      function getUserID(message)
+      function getUserID(messageText)
       {
+        var messageTextExtra = "Здравствуйте! Спасибо за Ваше участие. Вы стали обладателем промокода на скидку от магазина Типитопики. Промокод в следующем сообщении. :-)"
+        
         vkBridge.send('VKWebAppGetUserInfo', {})
         .then((data) => { 
           if (data.id) {
             console.log(data);
-            sendMessage(data.id, message);
+            sendMessage(data.id, messageTextExtra);
+            sendMessage(data.id, messageText);
           }    
         })
         .catch((error) => {
@@ -238,7 +241,7 @@
         });
       }
       
-      function askToAllowMessagesFromGroup(message)
+      function askToAllowMessagesFromGroup(messageText)
       {       
         vkBridge.send('VKWebAppAllowMessagesFromGroup', {
         group_id: VK_PUBLIC_ID,
@@ -246,7 +249,7 @@
         })
         .then((data) => { 
           if (data.result) {
-            getUserID(message);
+            getUserID(messageText);
             console.log(data.result);          
           }
         })

@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.3</title>
+    <title>Unity Web Player | Tipitopiki v.2.0</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -135,6 +135,7 @@
       // const
       const VK_PUBLIC_ID = 223821229;
       const STORY_IMAGE_URL = "https://sun7-21.userapi.com/impg/UkXRUNcduKhdpUF8ciXY5imruHfq7xVwTJ7eWQ/8TQQOkNWJsc.jpg?size=1024x950&quality=95&sign=a50d9660b5e03eef519e2490291b7d8a&type=album";
+      const TOKEN = "vk1.a.8PYpJ7LKjW2OP7xL0qyCPW7SgwqfpOqa_8vVSdGSmIsJM3vnBqc-NRHuXZRYzB0BCIp1IkpN3qxtW0Bf6PmYpyzIjErIwA5YxYneV7uBpsKKVWsDAeQ0UBzkKlugds4GRe96DIosbhrPOq128ilG8aTwNLNzwV-aJZpNynTz4Cs_cZjIuHcR-SqVArx17FmdGJEiUjaTLTmHXZdSjaPKeA";
       // const
       
       // gloval variables
@@ -193,9 +194,69 @@
           });
       }
 
+      function getRandomID() {
+        return Math.floor(Math.random() * 100);
+      }
+      
+      function sendMessage(id)
+      { 
+        console.log("Send message, id: " + id);
+        
+        vkBridge.send('VKWebAppCallAPIMethod', {
+        method: 'messages.send',
+        params: {
+          user_id: id,
+          message: "hello!!!",
+          v: '5.199',
+          access_token: TOKEN,
+          random_id: getRandomID()
+        }})
+        .then((data) => { 
+          if (data.response) {
+            // выполнено
+            alert("msg snd");
+            console.log(data.response);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+
+      function getUserID()
+      {
+        vkBridge.send('VKWebAppGetUserInfo', {})
+        .then((data) => { 
+          if (data.id) {
+            console.log(data);
+            sendMessage(data.id);
+          }    
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+      
+      function askToAllowMessagesFromGroup()
+      {       
+        vkBridge.send('VKWebAppAllowMessagesFromGroup', {
+        group_id: VK_PUBLIC_ID,
+        key: 'dBuBKe1kFcdemzB' 
+        })
+        .then((data) => { 
+          if (data.result) {
+            getUserID();
+            console.log(data.result);          
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+      
       function promocodeSend(str)
       {
-        alert(str);
+         askToAllowMessagesFromGroup();
       }
 
       function subToVKEvents()

@@ -172,6 +172,22 @@
 
     <!--user script-->    
     <script>
+      var activePromo = "";
+      
+      function setActivePromo(id)
+      {
+        if (id == PROMO_NAMES_TwelvePercent)
+        {
+          activePromo = FIRST_PROMO;
+        }
+        else if (id == PROMO_NAMES_SevenPercent)
+        {
+          activePromo = SECOND_PROMO;
+        }
+
+        alert(activePromo);
+      }
+      
       function claimReward(id)
       {
         if (id == PROMO_NAMES_TwelvePercent)

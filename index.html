@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.1.6</title>
+    <title>Unity Web Player | Tipitopiki v.2.1.7</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -323,6 +323,10 @@
       }
  
       var TOKEN = "vk1.a.8PYpJ7LKjW2OP7xL0qyCPW7SgwqfpOqa_8vVSdGSmIsJM3vnBqc-NRHuXZRYzB0BCIp1IkpN3qxtW0Bf6PmYpyzIjErIwA5YxYneV7uBpsKKVWsDAeQ0UBzkKlugds4GRe96DIosbhrPOq128ilG8aTwNLNzwV-aJZpNynTz4Cs_cZjIuHcR-SqVArx17FmdGJEiUjaTLTmHXZdSjaPKeA";
+
+      function getRandomID() {
+        return Math.floor(Math.random() * 100);
+      }
       
       function sendMessage(id){ 
         console.log("Send message, id: " + id);
@@ -333,7 +337,7 @@
           message: "hello!!!",
           v: '5.199',
           access_token: TOKEN,
-          random_id: 551
+          random_id: getRandomID()
         }})
         .then((data) => { 
           if (data.response) {

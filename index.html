@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.0.8</title>
+    <title>Unity Web Player | Tipitopiki v.1.0.9</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -166,7 +166,6 @@
         group_id: VK_PUBLIC_ID
         })
         .then((data) => { 
-          result = true;
           if (data.result) {
             console.log(data);
           }
@@ -174,9 +173,22 @@
         .catch((error) => {
           console.log(error); 
         });
-
+        
+        //
+        vkBridge.subscribe(event => {          
+          if (event.detail.type == "VKWebAppJoinGroupResult")
+          {
+              alert("event");
+              if (event.detail.data.result) 
+              {
+                result = true;
+                alert("event succ");
+              }
+          }
+        });
+        //
+        
         alert("Subbed: " + result);
-        return result;
       }
       // vk api
       

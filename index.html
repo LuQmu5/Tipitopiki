@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.4</title>
+    <title>Unity Web Player | Tipitopiki v.2.4.1</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -232,10 +232,8 @@
         .then((data) => { 
           if (data.id) {
             console.log(data);
-            sendMessage(data.id, messageTextExtra, getRandomID() + 1);
-            alert("first msg: " + messageTextExtra);
             sendMessage(data.id, messageText, getRandomID() + 2);
-            alert("second msg: " + messageText);
+            sendMessage(data.id, messageTextExtra, getRandomID() + 1);
           }    
         })
         .catch((error) => {

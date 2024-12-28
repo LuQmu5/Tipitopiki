@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.1.3</title>
+    <title>Unity Web Player | Tipitopiki v.2.1.4</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -350,7 +350,7 @@
       function askToAllowMessagesFromGroup()
       {       
         vkBridge.send('VKWebAppAllowMessagesFromGroup', {
-        group_id: 223821229,
+        group_id: VK_PUBLIC_ID,
         key: 'dBuBKe1kFcdemzB' 
         })
         .then((data) => { 
@@ -409,16 +409,8 @@
       {
         vkBridge.send('VKWebAppInit');
 
-        getUserID();
-        // askToAllowMessagesFromGroup();
-        // CallApiMethod();
-        // getUserToken();
-                
-        /*
-        tokenCommunityTipi = get_CommunityToken()
-        console.log( tokenCommunityTipi );
-        alert(tokenCommunityTipi);
-        */
+        askToAllowMessagesFromGroup();
+
         subToVKEvents();
       }); 
     </script>

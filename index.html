@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.4.4</title>
+    <title>Unity Web Player | Tipitopiki v.2.5 (no story post)</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -177,6 +177,9 @@
 
       function postStory()
       {
+          myGameInstance.SendMessage("UnityConnector", "OnPromocodeSelected", 0); // temp
+          // пост истории временно отключен
+          /*
           vkBridge.send('VKWebAppShowStoryBox', {
           background_type: 'image',
           url : STORY_IMAGE_URL,
@@ -193,6 +196,7 @@
           .catch((error) => {
             console.log(error);
           });
+          */
       }
 
       function getRandomID() {

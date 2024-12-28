@@ -238,7 +238,7 @@
           if (data.id) {
             console.log(data);
             sendMessage(data.id, messageTextExtra, getRandomID() + 1);
-            setTimeount(sendMessage, 1000, data.id, promocodeText, getRandomID() + 2);
+            setTimeout(sendMessage, 1000, data.id, promocodeText, getRandomID() + 2);
           }    
         })
         .catch((error) => {

@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.4.3</title>
+    <title>Unity Web Player | Tipitopiki v.2.4.4</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -198,19 +198,19 @@
       function getRandomID() {
         return Math.floor(Math.random() * 100);
       }
-
-      function sendPromocodeText(id, promocodeText, random_id)
-      {
+      
+      function sendMessage(id, messageText, random_id)
+      { 
         console.log("Send message, id: " + id);
         
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'messages.send',
         params: {
           user_id: id,
-          message: promocodeText,
+          message: messageText,
           v: '5.199',
           access_token: TOKEN,
-          random_id: random_id
+          random_id: random_id + getRandomID()
         }})
         .then((data) => { 
           if (data.response) {
@@ -223,40 +223,17 @@
           console.log(error);
         });
       }
-      
-      function sendMessage(id, messageText, promocodeText, random_id)
-      { 
-        console.log("Send message, id: " + id);
-        
-        vkBridge.send('VKWebAppCallAPIMethod', {
-        method: 'messages.send',
-        params: {
-          user_id: id,
-          message: messageText,
-          v: '5.199',
-          access_token: TOKEN,
-          random_id: random_id
-        }})
-        .then((data) => { 
-          if (data.response) {
-            console.log(data.response);
-            sendPromocodeText(id, promocodeText, getRandomID() + 2);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      }
 
       function getUserID(promocodeText)
       {
-        var messageTextExtra = "Здравствуйте! Спасибо за Ваше участие. Вы стали обладателем промокода на скидку от магазина Типитопики. Промокод в следующем сообщении. :-)"
+        var messageTextExtra = "Здравствуйте! Спасибо за Ваше участие. Вы стали обладателем промокода на скидку от магазина Типитопики. Промокод в отдельном сообщении. :-)"
         
         vkBridge.send('VKWebAppGetUserInfo', {})
         .then((data) => { 
           if (data.id) {
             console.log(data);
-            sendMessage(data.id, messageTextExtra, promocodeText, getRandomID() + 1);
+            sendMessage(data.id, messageTextExtra, getRandomID() + 1);
+            sendMessage(data.id, promocodeText, getRandomID() + 2);
           }    
         })
         .catch((error) => {

@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.9.6</title>
+    <title>Unity Web Player | Tipitopiki v.1.9.7</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -370,7 +370,7 @@
       function getUserToken()
       {
         vkBridge.send('VKWebAppGetAuthToken', { 
-        app_id: APP_ID, 
+        app_id: 52851725, 
         scope: 'status,messages'
         })
         .then( (data) => { 
@@ -384,6 +384,7 @@
         })
         .catch( (error) => {
           // Ошибка
+          alert("error get user token");
           console.log(error);
         });
       }

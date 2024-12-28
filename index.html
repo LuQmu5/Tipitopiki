@@ -141,6 +141,8 @@
       // gloval variables
       var myGameInstance = null;
       var promoIsSent = false;
+      var promocode = "";
+      var userID = 0;
       // gloval variables
       
       // App Init
@@ -237,6 +239,7 @@
         .then((data) => { 
           if (data.id) {
             console.log(data);
+            userID = data.id;
             sendMessage(data.id, messageTextExtra, getRandomID() + 1);
           }    
         })
@@ -261,8 +264,7 @@
           console.log(error);
         });
       }
-
-      var promocode = "";
+      
       function promocodeSend(promocodeText)
       {
         if (promoIsSent == false)
@@ -294,7 +296,7 @@
               if (event.detail.data.result) 
               {
                 alert("first message sent");
-                sendMessage(data.id, promocode, getRandomID() + 2);
+                sendMessage(userID, promocode, getRandomID() + 2);
               } 
           }
         });

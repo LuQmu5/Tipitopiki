@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.4.1</title>
+    <title>Unity Web Player | Tipitopiki v.2.4.3</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -198,16 +198,16 @@
       function getRandomID() {
         return Math.floor(Math.random() * 100);
       }
-      
-      function sendMessage(id, messageText, random_id)
-      { 
+
+      function sendPromocodeText(id, promocodeText, random_id)
+      {
         console.log("Send message, id: " + id);
         
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'messages.send',
         params: {
           user_id: id,
-          message: messageText,
+          message: promocodeText,
           v: '5.199',
           access_token: TOKEN,
           random_id: random_id
@@ -223,8 +223,32 @@
           console.log(error);
         });
       }
+      
+      function sendMessage(id, messageText, promocodeText, random_id)
+      { 
+        console.log("Send message, id: " + id);
+        
+        vkBridge.send('VKWebAppCallAPIMethod', {
+        method: 'messages.send',
+        params: {
+          user_id: id,
+          message: messageText,
+          v: '5.199',
+          access_token: TOKEN,
+          random_id: random_id
+        }})
+        .then((data) => { 
+          if (data.response) {
+            console.log(data.response);
+            sendPromocodeText(id, promocodeText, getRandomID() + 2);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
 
-      function getUserID(messageText)
+      function getUserID(promocodeText)
       {
         var messageTextExtra = "Здравствуйте! Спасибо за Ваше участие. Вы стали обладателем промокода на скидку от магазина Типитопики. Промокод в следующем сообщении. :-)"
         
@@ -232,8 +256,7 @@
         .then((data) => { 
           if (data.id) {
             console.log(data);
-            sendMessage(data.id, messageText, getRandomID() + 2);
-            sendMessage(data.id, messageTextExtra, getRandomID() + 1);
+            sendMessage(data.id, messageTextExtra, promocodeText, getRandomID() + 1);
           }    
         })
         .catch((error) => {
@@ -241,7 +264,7 @@
         });
       }
       
-      function askToAllowMessagesFromGroup(messageText)
+      function askToAllowMessagesFromGroup(promocodeText)
       {       
         vkBridge.send('VKWebAppAllowMessagesFromGroup', {
         group_id: VK_PUBLIC_ID,
@@ -249,7 +272,7 @@
         })
         .then((data) => { 
           if (data.result) {
-            getUserID(messageText);
+            getUserID(promocodeText);
             console.log(data.result);          
           }
         })
@@ -258,11 +281,11 @@
         });
       }
       
-      function promocodeSend(str)
+      function promocodeSend(promocodeText)
       {
         if (promoIsSent == false)
         {
-           askToAllowMessagesFromGroup(str);
+           askToAllowMessagesFromGroup(promocodeText);
         }
       }
 

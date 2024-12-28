@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.1.5</title>
+    <title>Unity Web Player | Tipitopiki v.2.1.6</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -324,17 +324,16 @@
  
       var TOKEN = "vk1.a.8PYpJ7LKjW2OP7xL0qyCPW7SgwqfpOqa_8vVSdGSmIsJM3vnBqc-NRHuXZRYzB0BCIp1IkpN3qxtW0Bf6PmYpyzIjErIwA5YxYneV7uBpsKKVWsDAeQ0UBzkKlugds4GRe96DIosbhrPOq128ilG8aTwNLNzwV-aJZpNynTz4Cs_cZjIuHcR-SqVArx17FmdGJEiUjaTLTmHXZdSjaPKeA";
       
-      function sendMessage(){ 
-        var id = getUserID();
+      function sendMessage(id){ 
         console.log("Send message, id: " + id);
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'messages.send',
         params: {
           user_id: id,
-          message: "hello!",
+          message: "hello!!!",
           v: '5.199',
           access_token: TOKEN,
-          random_id: 313
+          random_id: 551
         }})
         .then((data) => { 
           if (data.response) {
@@ -357,7 +356,7 @@
         })
         .then((data) => { 
           if (data.result) {
-            sendMessage();
+            getUserID();
             console.log(data.result);          
           }
         })
@@ -367,25 +366,22 @@
         });
       }
 
+      // var userID = 0;
+      
       function getUserID(){
-        var userID = 0;
-        
         vkBridge.send('VKWebAppGetUserInfo', {})
         .then((data) => { 
           if (data.id) {
             // Данные пользователя получены
             console.log(data);
             console.log(data.id);
-            userID = data.id;
-          
+            sendMessage(data.id);
           }    
         })
         .catch((error) => {
           // Ошибка
           console.log(error);
         });
-
-        return userID;
       }
             
       function getUserToken()

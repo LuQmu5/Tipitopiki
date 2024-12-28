@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.2.5 (no story post)</title>
+    <title>Unity Web Player | Tipitopiki v.2.5.1 (no story post)</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -205,8 +205,6 @@
       
       function sendMessage(id, messageText, random_id)
       { 
-        console.log("Send message, id: " + id);
-        
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'messages.send',
         params: {
@@ -214,13 +212,35 @@
           message: messageText,
           v: '5.199',
           access_token: TOKEN,
-          random_id: random_id + getRandomID()
+          random_id: random_id
+        }})
+        .then((data) => { 
+          if (data.response) {
+            console.log(data.response);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+
+      function sendMessages(messageText, promocodeText, id, random_id)
+      {
+        vkBridge.send('VKWebAppCallAPIMethod', {
+        method: 'messages.send',
+        params: {
+          user_id: id,
+          message: messageText,
+          v: '5.199',
+          access_token: TOKEN,
+          random_id: random_id
         }})
         .then((data) => { 
           if (data.response) {
             console.log(data.response);
             myGameInstance.SendMessage("UnityConnector", "SetNewState", 4); // надо бы в юнити метод сделать читаемый
             promoIsSent = true;
+            sendMessage(id, promocodeText, getRandomID() + 1);
           }
         })
         .catch((error) => {
@@ -236,8 +256,7 @@
         .then((data) => { 
           if (data.id) {
             console.log(data);
-            sendMessage(data.id, messageTextExtra, getRandomID() + 1);
-            sendMessage(data.id, promocodeText, getRandomID() + 2);
+            sendMessages(messageTextExtra, promocodeText, data.id, getRandomID());
           }    
         })
         .catch((error) => {

@@ -299,12 +299,14 @@
         });
       }
 
+      const APP_ID = 52851725;
+      
       function get_CommunityToken()  {           
         var tokenCommunity = "";
         
         VKBridge.send("VKWebAppGetCommunityToken", {
-               app_id: PUBLIC_ID,  
-               group_id: 166562603, 
+               app_id: APP_ID,  
+               group_id: VK_PUBLIC_ID, 
                scope: 'messages,docs' 
              })
               .then( (data) => { 

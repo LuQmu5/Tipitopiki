@@ -249,7 +249,8 @@
         .then((data) => { 
           if (data.response) {
             console.log(data.response);
-            myGameInstance.SendMessage("UnityConnector", "SetNewState", 4); // надо бы в юнити метод сделать читаемый
+            // myGameInstance.SendMessage("UnityConnector", "SetNewState", 4); // надо бы в юнити метод сделать читаемый
+            myGameInstance.SendMessage("UnityConnector", "OnPromocodeSent");
             promoIsSent = true;
 
             sendPromocodeMessage(id, promocodeText, getRandomID() + 2); // set time out?

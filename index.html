@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.3.0.2 (no story post)</title>
+    <title>Unity Web Player | Tipitopiki v.3.0.3 (no story post)</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -211,7 +211,7 @@
       }
 
       function getRandomID() {
-        return Math.floor(Math.random() * 100);
+        return Math.floor(Math.random() * 10000);
       }
 
       function sendPromocodeMessage(id, promocodeText, random_id)
@@ -249,11 +249,11 @@
         .then((data) => { 
           if (data.response) {
             console.log(data.response);
-            // myGameInstance.SendMessage("UnityConnector", "SetNewState", 4); // надо бы в юнити метод сделать читаемый
             myGameInstance.SendMessage("UnityConnector", "OnPromocodeSent");
             promoIsSent = true;
 
-            sendPromocodeMessage(id, promocodeText, getRandomID() + 2); // set time out?
+            // sendPromocodeMessage(id, promocodeText, getRandomID() + 2); // set time out?
+            setTimeout(sendPromocodeMessage, 1000, promocodeText, id + getRandomId());
           }
         })
         .catch((error) => {

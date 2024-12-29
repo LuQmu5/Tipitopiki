@@ -122,7 +122,7 @@
                 };
 
               }).catch((message) => {
-                alert(message);
+                console.log(message);
               });
             };
 
@@ -212,7 +212,7 @@
 
       function sendPromocodeMessage(id, promocodeText, random_id)
       {
-        alert(promocodeText);
+        console.log(promocodeText);
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'messages.send',
         params: {

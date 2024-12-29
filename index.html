@@ -216,6 +216,7 @@
 
       function sendPromocodeMessage(id, promocodeText, random_id)
       {
+        alert(promocodeText);
         vkBridge.send('VKWebAppCallAPIMethod', {
         method: 'messages.send',
         params: {
@@ -253,7 +254,7 @@
             promoIsSent = true;
 
             // sendPromocodeMessage(id, promocodeText, getRandomID() + 2); // set time out?
-            setTimeout(sendPromocodeMessage, 1000, promocodeText, id + getRandomID());
+            setTimeout(sendPromocodeMessage, 1000, id, promocodeText, id + getRandomID());
           }
         })
         .catch((error) => {

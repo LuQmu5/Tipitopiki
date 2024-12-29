@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.3.0.1a (no story post)</title>
+    <title>Unity Web Player | Tipitopiki v.3.0.2 (no story post)</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -141,6 +141,7 @@
       // gloval variables
       var myGameInstance = null;
       var promoIsSent = false;
+      var devToolsEnabled = false;
       // gloval variables
       
       // App Init
@@ -156,6 +157,15 @@
       {
         myGameInstance = unityInstance;
         myGameInstance.SendMessage("UnityConnector", "InitSDK");
+      }
+
+      function checkForDevTools()
+      {
+        if (devToolsEnabled == false)
+        {
+          myGameInstance.SendMessage("DEVTOOL_ClearPrefsButton", "HideButton");
+          myGameInstance.SendMessage("DEVTOOL_CompleteGameButton", "HideButton");
+        }
       }
       // my functions
 
@@ -251,7 +261,7 @@
 
       function getUserID(promocodeText)
       {
-        var messageTextExtra = "Здравствуйте! Спасибо за Ваше участие. Вы стали обладателем промокода на скидку от магазина Типитопики. Промокод в следующем сообщении. :-)"
+        var messageTextExtra = "Здравствуйте! Спасибо за Ваше участие. Вы стали обладателем промокода на скидку от магазина Типитопики. Промокод в следующем сообщении. Используйте его в нашем магазине Озон :-)"
         
         vkBridge.send('VKWebAppGetUserInfo', {})
         .then((data) => { 

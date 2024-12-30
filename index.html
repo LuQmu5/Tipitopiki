@@ -187,6 +187,8 @@
 
       function postStory()
       {
+          myGameInstance.SendMessage("UnityConnector", "OnPromocodeSelected", 0); // 0 - twelve, 1 - seven
+          /*
           vkBridge.send('VKWebAppShowStoryBox', {
           background_type: 'image',
           url : STORY_IMAGE_URL,
@@ -203,6 +205,7 @@
           .catch((error) => {
             console.log(error);
           });
+          */
       }
 
       function getRandomID() {
@@ -308,7 +311,6 @@
               if (event.detail.data.result) 
               {
                 myGameInstance.SendMessage("UnityConnector", "OnPromocodeSelected", 0); // 0 - twelve, 1 - seven
-                myGameInstance.SendMessage("MainMenuManager", "OnPromocodeSent");
               } 
           }
           // send message

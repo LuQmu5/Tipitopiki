@@ -307,16 +307,11 @@
           {
               if (event.detail.data.result) 
               {
-                 setTimeout(UpdateView, 1000);
+                 myGameInstance.SendMessage("UnityConnector", "OnPromocodeSelected", 0); // нужен фокус на приложении после поста сторис
               } 
           }
           // send message
         });
-      }
-
-      function UpdateView()
-      {
-        myGameInstance.SendMessage("UnityConnector", "OnPromocodeSelected", 0); // 0 - twelve, 1 - seven
       }
       // vk api
       

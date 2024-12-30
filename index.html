@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.0.0.1.a.</title>
+    <title>Unity Web Player | Tipitopiki v.1.0.8</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -52,12 +55,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/bld.loader.js";
+      var loaderUrl = buildUrl + "/newBuild3.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/bld.data.unityweb",
-        frameworkUrl: buildUrl + "/bld.framework.js.unityweb",
-        codeUrl: buildUrl + "/bld.wasm.unityweb",
+        dataUrl: buildUrl + "/newBuild3.data.unityweb",
+        frameworkUrl: buildUrl + "/newBuild3.framework.js.unityweb",
+        codeUrl: buildUrl + "/newBuild3.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Vegma",
         productName: "Tipitopiki",
@@ -110,6 +113,9 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                // init
+                InitApp(unityInstance);
+                // init
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
@@ -123,5 +129,193 @@
       document.body.appendChild(script);
 
     </script>
+
+    <!--my script-->
+    <script>
+      // const
+      const VK_PUBLIC_ID = 223821229;
+      const STORY_IMAGE_URL = "https://sun7-21.userapi.com/impg/UkXRUNcduKhdpUF8ciXY5imruHfq7xVwTJ7eWQ/8TQQOkNWJsc.jpg?size=1024x950&quality=95&sign=a50d9660b5e03eef519e2490291b7d8a&type=album";
+      const TOKEN = "vk1.a.8PYpJ7LKjW2OP7xL0qyCPW7SgwqfpOqa_8vVSdGSmIsJM3vnBqc-NRHuXZRYzB0BCIp1IkpN3qxtW0Bf6PmYpyzIjErIwA5YxYneV7uBpsKKVWsDAeQ0UBzkKlugds4GRe96DIosbhrPOq128ilG8aTwNLNzwV-aJZpNynTz4Cs_cZjIuHcR-SqVArx17FmdGJEiUjaTLTmHXZdSjaPKeA";
+      // const
+      
+      // gloval variables
+      var myGameInstance = null;
+      var devToolsEnabled = true;
+      // gloval variables
+      
+      // App Init
+      jQuery(document).ready(function($)
+      {
+        vkBridge.send('VKWebAppInit');
+        subToVKEvents();
+      }); 
+      // App Init
+  
+      // my functions
+      function InitApp(unityInstance)
+      {
+        myGameInstance = unityInstance;
+        myGameInstance.SendMessage("UnityConnector", "InitSDK");
+        checkForDevTools();
+      }
+
+      function checkForDevTools()
+      {
+        if (devToolsEnabled == false)
+        {
+          myGameInstance.SendMessage("DEVTOOL_ClearPrefsButton", "HideButton");
+          myGameInstance.SendMessage("DEVTOOL_CompleteGameButton", "HideButton");
+        }
+      }
+      // my functions
+
+      // vk api
+      function subscribe()
+      { 
+        vkBridge.send('VKWebAppJoinGroup', {
+        group_id: VK_PUBLIC_ID
+        })
+        .then((data) => { 
+          if (data.result) {
+            console.log(data);
+          }
+        })
+        .catch((error) => {
+          console.log(error); 
+        });
+      }
+
+      function postStory()
+      {
+          vkBridge.send('VKWebAppShowStoryBox', {
+          background_type: 'image',
+          url : STORY_IMAGE_URL,
+          attachment: {
+            text: 'book',
+            type: 'photo',
+            owner_id: 743784474,
+            id: 12345678
+          }})
+          .then((data) => {
+            if (data.code_data) {
+              console.log(data);
+            }})
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      function getRandomID() {
+        return Math.floor(Math.random() * 10000);
+      }
+
+      function sendPromocodeMessage(id, promocodeText, random_id)
+      {
+        console.log(promocodeText);
+        vkBridge.send('VKWebAppCallAPIMethod', {
+        method: 'messages.send',
+        params: {
+          user_id: id,
+          message: promocodeText,
+          v: '5.199',
+          access_token: TOKEN,
+          random_id: random_id
+        }})
+        .then((data) => { 
+          if (data.response) {
+            console.log(data.response);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+      
+      function sendMessage(id, messageText, promocodeText, random_id)
+      { 
+        vkBridge.send('VKWebAppCallAPIMethod', {
+        method: 'messages.send',
+        params: {
+          user_id: id,
+          message: messageText,
+          v: '5.199',
+          access_token: TOKEN,
+          random_id: random_id
+        }})
+        .then((data) => { 
+          if (data.response) {
+            console.log(data.response);
+            myGameInstance.SendMessage("UnityConnector", "OnPromocodeSent");
+
+            setTimeout(sendPromocodeMessage, 1000, id, promocodeText, id + getRandomID());
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+
+      function getUserID(promocodeText)
+      {
+        var messageTextExtra = "Здравствуйте! Спасибо за Ваше участие. Вы стали обладателем промокода на скидку от магазина Типитопики. Используйте его в нашем магазине Озон. Промокод доступен до 31 января 2025 года. Промокод отправили в следующем сообщении. :-)  С новым годом! :-)";
+        
+        vkBridge.send('VKWebAppGetUserInfo', {})
+        .then((data) => { 
+          if (data.id) {
+            console.log(data);
+            sendMessage(data.id, messageTextExtra, promocodeText, getRandomID() + 1);
+          }    
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+      
+      function askToAllowMessagesFromGroup(promocodeText)
+      {       
+        vkBridge.send('VKWebAppAllowMessagesFromGroup', {
+        group_id: VK_PUBLIC_ID,
+        key: 'dBuBKe1kFcdemzB' 
+        })
+        .then((data) => { 
+          if (data.result) {
+            getUserID(promocodeText);
+            console.log(data.result);          
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+      
+      function promocodeSend(promocodeText)
+      {
+         askToAllowMessagesFromGroup(promocodeText);
+      }
+
+      function subToVKEvents()
+      {
+        vkBridge.subscribe(event => {          
+          if (event.detail.type == "VKWebAppJoinGroupResult")
+          {
+              if (event.detail.data.result) 
+              {
+                myGameInstance.SendMessage("UnityConnector", "LoadUserState");
+              }
+          }
+          else if (event.detail.type == 'VKWebAppShowStoryBoxResult')
+          {
+              if (event.detail.data.result) 
+              {
+                  myGameInstance.SendMessage("UnityConnector", "OnPromocodeSelected", 0); // нужен фокус на приложении после поста сторис (мышкой кликнуть)
+              } 
+          }
+          // send message
+        });
+      }
+      // vk api
+      
+    </script>
+    <!--my script-->
   </body>
 </html>

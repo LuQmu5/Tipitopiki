@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.0.2</title>
+    <title>Unity Web Player | Tipitopiki v.1.0.3</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -308,6 +308,7 @@
               if (event.detail.data.result) 
               {
                 myGameInstance.SendMessage("UnityConnector", "OnPromocodeSelected", 0); // 0 - twelve, 1 - seven
+                myGameInstance.SendMessage("MainMenu", "OnPromocodeSent");
               } 
           }
           // send message

@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.1.0.6</title>
+    <title>Unity Web Player | Tipitopiki v.1.0.7</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -307,8 +307,11 @@
           {
               if (event.detail.data.result) 
               {
-                  myGameInstance.SendMessage("UnityConnector", "OnPromocodeSelected", 0); // нужен фокус на приложении после поста сторис
+                  myGameInstance.SendMessage("UnityConnector", "OnPromocodeSelected", 0); // нужен фокус на приложении после поста сторис (мышкой кликнуть)
                   document.querySelector('body').click();
+                  document.querySelector('body').focus();
+                  document.querySelector('html').click();
+                  document.querySelector('html').focus();
               } 
           }
           // send message

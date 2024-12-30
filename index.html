@@ -308,7 +308,7 @@
               if (event.detail.data.result) 
               {
                 myGameInstance.SendMessage("UnityConnector", "OnPromocodeSelected", 0); // 0 - twelve, 1 - seven
-                myGameInstance.SendMessage("MainMenu", "OnPromocodeSent");
+                myGameInstance.SendMessage("MainMenuManager", "OnPromocodeSent");
               } 
           }
           // send message

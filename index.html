@@ -6,7 +6,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Tipitopiki v.R1 </title>
+    <title>Unity Web Player | Tipitopiki v.R2 </title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -140,7 +140,6 @@
       
       // gloval variables
       var myGameInstance = null;
-      var promoIsSent = false;
       var devToolsEnabled = false;
       // gloval variables
       
@@ -247,7 +246,6 @@
           if (data.response) {
             console.log(data.response);
             myGameInstance.SendMessage("UnityConnector", "OnPromocodeSent");
-            promoIsSent = true;
 
             setTimeout(sendPromocodeMessage, 1000, id, promocodeText, id + getRandomID());
           }
@@ -292,10 +290,7 @@
       
       function promocodeSend(promocodeText)
       {
-        if (promoIsSent == false)
-        {
-           askToAllowMessagesFromGroup(promocodeText);
-        }
+         askToAllowMessagesFromGroup(promocodeText);
       }
 
       function subToVKEvents()
